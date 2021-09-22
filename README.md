@@ -20,4 +20,4 @@ Use the following format: https://epa.ms/nodejs19-hw1-ex2.).
 5. In case of read/write errors, log them in the console.
 6. The program should be started via npm script using nodemon (i.e. `npm run task2`).
 #### TASK 1.3
-Rewrite the above-mentioned programs to use babel ([https://babeljs.io/](Rewrite the above-mentioned programs to use babel (https://babeljs.io/) and ES6 modules.)) and ES6 modules.
+Rewrite the above-mentioned programs to use babel [https://babeljs.io/](https://babeljs.io/) and ES6 modules.
