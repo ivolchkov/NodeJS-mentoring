@@ -19,3 +19,26 @@ Write a program which should do the following:
 6. The program should be started via npm script using nodemon (i.e. `npm run task2`).
 #### TASK 1.3
 Rewrite the above-mentioned programs to use babel [https://babeljs.io/](https://babeljs.io/) and ES6 modules.
+
+## HOMEWORK 2
+### IN MEMORY CRUD REST SERVICE WITH VALIDATION
+#### TASK 2.1   
+Write a simple REST service withCRUD operations for User entity.  
+1. To create REST service,use ExpressJS [https://expressjs.com/](https://expressjs.com/). 
+The User should have the following properties(you can use UUIDas a user identifier (id))
+2. Service should have the following CRUD operations for User:
+   - get user by **_id_**; 
+   - create and update user;
+   - get auto-suggest list from limit users, sorted by `login` property and filtered by `loginSubstringin` the login property: `getAutoSuggestUsers(loginSubstring, limit)`
+   - remove user (**_soft delete_** – user gets marked with `isDeletedflag`, but not removed from the collection).
+3. Store user’s collection in the service memory (while the service is running).   
+   To test the service **CRUD** methods,you can use Postman [https://www.getpostman.com/](https://www.getpostman.com/).
+#### TASK 2.2
+Add server-side validation for create/update operations of UserEntity:
+- all fields are required;
+- login validation is required;
+- password must contain letters and numbers;
+- user’s age must be between 4 and 130.
+
+In case of any property does not meet the validation requirements or the field is absent, return **400 (Bad Request)** and detailed error message.
+For requests validation use special packages like **joi** [https://github.com/hapijs/joi](https://github.com/hapijs/joi) [https://www.npmjs.com/package/express-joi-validation](https://www.npmjs.com/package/express-joi-validation).
