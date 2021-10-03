@@ -42,3 +42,19 @@ Add server-side validation for create/update operations of UserEntity:
 
 In case of any property does not meet the validation requirements or the field is absent, return **400 (Bad Request)** and detailed error message.
 For requests validation use special packages like **joi** [https://github.com/hapijs/joi](https://github.com/hapijs/joi) [https://www.npmjs.com/package/express-joi-validation](https://www.npmjs.com/package/express-joi-validation).
+## HOMEWORK 3
+### POSTGRESQL AND LAYERED ARCHITECTURE
+#### TASK 3.1 
+Install DB PostgreSQL on your machine or use a free web hosting services for PostgreSQL [https://www.heroku.com/postgresor](https://www.heroku.com/postgresor) [https://www.elephantsql.com/plans.html](https://www.elephantsql.com/plans.html).
+- Write SQL script which will create Users table in the DB and fill it in with predefined user`s collection.
+- Configure your REST service to work with PostgreSQL.
+- Use the sequelize package([http://docs.sequelizejs.com/](http://docs.sequelizejs.com/)) as ORM to work with PostgreSQL. As an alternative to sequelize you can use more low-level query-builder library ([http://knexjs.org/](http://knexjs.org/)).
+#### TASK 3.2
+The service should adhere to 3-layer architecture principles ([https://softwareontheroad.com/ideal-nodejs-project-structure/](https://softwareontheroad.com/ideal-nodejs-project-structure/)) and 
+contain the following set of directories:  
+<pre>
+      |-routers / controllers  
+      |-services  
+      |-data-access  
+      |-models
+</pre>

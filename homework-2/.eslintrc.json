@@ -328,7 +328,11 @@
       2,
       7
     ],
-    "no-bitwise": 2
+    "no-bitwise": 2,
+    "@typescript-eslint/restrict-template-expressions": ["error", {
+      "allowAny": true,
+      "allowNullable": true
+    }]
   },
   "globals": {
     "$": true,
