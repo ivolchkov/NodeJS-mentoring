@@ -7,7 +7,7 @@
     "lint": "./node_modules/.bin/eslint  . --ext .ts --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node dist/app",
+    "start": "node dist/app --inspect-brk",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
