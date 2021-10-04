@@ -2,19 +2,46 @@ import { Inject, Service } from 'typedi';
 import { Logger } from 'winston';
 import { UserDTO, UserModel } from '../models/User';
 import UserRepository from '../repositories/user.repository';
-import { number } from 'joi';
+import { Sequelize, Transaction } from 'sequelize';
+import GroupRepository from '../repositories/group.repository';
+import { UserGroupModel } from '../models/UserGroup';
 
 @Service({ id: 'user.service' })
 export default class UserService {
     constructor(
         @Inject('user.repository') private userRepository: UserRepository,
-        @Inject('logger') private logger: Logger) {
+        @Inject('group.repository') private groupRepository: GroupRepository,
+        @Inject('logger') private logger: Logger,
+        @Inject('sequelize') private sequelize: Sequelize) {
         this.userRepository = userRepository;
+        this.groupRepository = groupRepository;
         this.logger = logger;
+        this.sequelize = sequelize;
     }
 
     public create(user: UserDTO): Promise<UserModel | Error> {
         return this.userRepository.create(user);
+    }
+
+    public async addUsersToGroup(groupId: string, userIds: Array<string>): Promise<Array<UserGroupModel>> {
+        try {
+            return this.sequelize.transaction({
+                isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED
+            }, async t => {
+                const userGroups = userIds.map((userId: string) => {
+                    return {
+                        UserUuid: userId,
+                        GroupUuid: groupId
+                    };
+                });
+                return this.userRepository.bulkCreateUserGroupRelation(userGroups, t);
+            });
+        } catch (err) {
+            const errorMessage = `An error has been occurred during saving new user to group relation record. Error message: ${err.message}`;
+
+            this.logger.error(errorMessage);
+            throw new Error(errorMessage);
+        }
     }
 
     public async getById(id: string): Promise<UserModel> {
