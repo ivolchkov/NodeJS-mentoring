@@ -59,7 +59,7 @@ export default class UserService {
     public async getByLoginSubstringAndLimitSize(loginSubstring: string, limit: number): Promise<Array<UserModel>> {
         const users = await this.userRepository.getByLoginSubstringAndLimitSize(loginSubstring, limit);
 
-        if (users === null) {
+        if (users.length === 0) {
             const errorMessage = `Users with which contain: '${loginSubstring}' substring 
             and limit size: ${limit} have not been found.`;
             this.logger.info(errorMessage);

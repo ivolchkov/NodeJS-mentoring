@@ -5,7 +5,6 @@ import Group, { GroupDTO, GroupModel } from '../models/Group';
 @Service({ id: 'group.repository' })
 export default class GroupRepository {
     public create(group: GroupDTO): Promise<GroupModel> {
-        console.log('In repository')
         return Group.create(group);
     }
 

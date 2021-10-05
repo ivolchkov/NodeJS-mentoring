@@ -7,5 +7,5 @@ interface LoggerConfig {
 export const loggerConfig:LoggerConfig = {
     consoleLogLevel: 'info',
     fileLogLevel: 'error',
-    filename: '../log/logging.log'
+    filename: './log/logging.log'
 };
