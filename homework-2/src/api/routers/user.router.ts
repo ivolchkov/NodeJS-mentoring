@@ -1,16 +1,18 @@
 import { validateLimit, validateLoginSubstring, validateSchema } from '../../validation/user.validation';
 import { NextFunction, Request, Response, Router } from 'express';
-import UserController from '../controllers/user.controller';
 import { asyncHandler } from '../utils/async.handler';
 import serviceMethodDescription from '../middlewares/service.method.description';
 import { UserDTO } from '../../models/User';
-import { Logger } from 'winston';
+import { ContainerDependencies } from '../../loaders/dependency.injector.loader';
+import verifyToken from '../middlewares/verify.token';
 
-export default (userController: UserController, logger: Logger): Router => {
+export default (containerDependencies: ContainerDependencies): Router => {
+    const { userController, logger, jwt, authConfig } = containerDependencies;
     const router = Router({ caseSensitive: true, strict: true });
 
     router.post('/',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         validateSchema(),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
@@ -24,6 +26,7 @@ export default (userController: UserController, logger: Logger): Router => {
 
     router.post('/addUsersToGroup',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const userGroupModels = await userController.addUsersToGroup(req.body.groupId, req.body.userIds);
@@ -35,6 +38,7 @@ export default (userController: UserController, logger: Logger): Router => {
 
     router.get('/:id',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const user = await userController.getById(req.params.id);
@@ -46,6 +50,7 @@ export default (userController: UserController, logger: Logger): Router => {
 
     router.get('/:loginSubstring/:limit',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         validateLoginSubstring(),
         validateLimit(),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -62,6 +67,7 @@ export default (userController: UserController, logger: Logger): Router => {
 
     router.put('/:id',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         validateSchema(),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
@@ -75,9 +81,9 @@ export default (userController: UserController, logger: Logger): Router => {
             }
         }));
 
-
     router.delete('/:id',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const user = await userController.deleteUser(req.params.id);
