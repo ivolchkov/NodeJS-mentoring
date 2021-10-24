@@ -3,18 +3,15 @@ import { Logger } from 'winston';
 import { UserDTO, UserModel } from '../models/User';
 import UserRepository from '../repositories/user.repository';
 import { Sequelize, Transaction } from 'sequelize';
-import GroupRepository from '../repositories/group.repository';
 import { UserGroupModel } from '../models/UserGroup';
 
 @Service({ id: 'user.service' })
 export default class UserService {
     constructor(
         @Inject('user.repository') private userRepository: UserRepository,
-        @Inject('group.repository') private groupRepository: GroupRepository,
         @Inject('logger') private logger: Logger,
         @Inject('sequelize') private sequelize: Sequelize) {
         this.userRepository = userRepository;
-        this.groupRepository = groupRepository;
         this.logger = logger;
         this.sequelize = sequelize;
     }

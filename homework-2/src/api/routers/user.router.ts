@@ -20,7 +20,7 @@ export default (containerDependencies: ContainerDependencies): Router => {
                 const createdUser = await userController.createUser(user);
                 res.json(createdUser);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
@@ -32,7 +32,7 @@ export default (containerDependencies: ContainerDependencies): Router => {
                 const userGroupModels = await userController.addUsersToGroup(req.body.groupId, req.body.userIds);
                 res.status(200).json(userGroupModels);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
@@ -44,7 +44,7 @@ export default (containerDependencies: ContainerDependencies): Router => {
                 const user = await userController.getById(req.params.id);
                 res.json(user);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
@@ -61,7 +61,7 @@ export default (containerDependencies: ContainerDependencies): Router => {
                 );
                 res.json(user);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
@@ -77,7 +77,7 @@ export default (containerDependencies: ContainerDependencies): Router => {
                 );
                 res.json(user);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
@@ -89,7 +89,7 @@ export default (containerDependencies: ContainerDependencies): Router => {
                 const user = await userController.deleteUser(req.params.id);
                 res.json(user);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 

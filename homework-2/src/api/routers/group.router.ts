@@ -17,10 +17,10 @@ export default (containerDependencies: ContainerDependencies): Router => {
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const group = req.body as GroupDTO;
-                const createdUser = await groupController.createGroup(group);
-                res.json(createdUser);
+                const createdGroup = await groupController.createGroup(group);
+                res.json(createdGroup);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
@@ -32,7 +32,7 @@ export default (containerDependencies: ContainerDependencies): Router => {
                 const group = await groupController.getById(req.params.id);
                 res.json(group);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
@@ -41,10 +41,10 @@ export default (containerDependencies: ContainerDependencies): Router => {
         verifyToken(jwt, authConfig),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const users = await groupController.findAll();
-                res.json(users);
+                const groups = await groupController.findAll();
+                res.json(groups);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
@@ -54,13 +54,13 @@ export default (containerDependencies: ContainerDependencies): Router => {
         validateGroupSchema(),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const user = await groupController.updateGroup(
+                const group = await groupController.updateGroup(
                     req.params.id,
                     req.body
                 );
-                res.json(user);
+                res.json(group);
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
@@ -76,7 +76,7 @@ export default (containerDependencies: ContainerDependencies): Router => {
                     res.status(404).json({ message: `Group with id: ${req.params.id} has not been found.` });
                 }
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
