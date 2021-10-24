@@ -16,7 +16,7 @@ export default (containerDependencies: ContainerDependencies): Router => {
                 const jwtToken = await authController.login(req.body.login, req.body.password);
                 res.json({ token: jwtToken });
             } catch (e) {
-                next(e);
+                return next(e);
             }
         }));
 
