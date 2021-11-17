@@ -1,3 +1,10 @@
+import dotenv from 'dotenv'
+
+const env = dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
+if (env.error) {
+    throw new Error(env.error.message);
+}
+
 interface LoggerConfig {
     consoleLogLevel: string,
     fileLogLevel: string,
@@ -5,7 +12,7 @@ interface LoggerConfig {
 }
 
 export const loggerConfig:LoggerConfig = {
-    consoleLogLevel: 'info',
-    fileLogLevel: 'error',
-    filename: './log/logging.log'
+    consoleLogLevel: process.env.CONSOLE_LOG_LEVEL,
+    fileLogLevel: process.env.FILE_LOG_LEVEL,
+    filename: process.env.LOG_FILENAME
 };

@@ -114,3 +114,14 @@ return **HTTP** **401** code (**Unauthorized Error**) and standard error message
 (**Forbidden Error**) and standard error message.
 #### TASK 6.2
 Add CORS middleware to access service methods from WEB applications hosted on another domains ([https://github.com/expressjs/cors](https://github.com/expressjs/cors)).
+## HOMEWORK 7
+### UNIT TESTS AND CONFIG
+#### TASK 7.1
+1) Add unit tests for **User** entity controller methods using **Jest** library ([https://jestjs.io/](https://jestjs.io/)).
+2) Add unit tests for **Group** entity controller methods using **Jest**.
+#### TASK 7.2
+The information on DB connection (**connection string**) should be stored in `.env` file and should be passed to the application 
+using environment variables with the help of **dotenv** package ([https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv)).  
+As an alternative package you can also use **config** ([https://www.npmjs.com/package/config](https://www.npmjs.com/package/config)).  
+#### TASK 7.3
+1) Add integration tests for getUsers and createUser methods with mock sequalize.
