@@ -4,7 +4,7 @@ export const Measure = (
     target: Object,
     propertyKey: string,
     descriptor: PropertyDescriptor
-) => {
+) : PropertyDescriptor => {
     const originalMethod = descriptor.value;
 
     descriptor.value = function (...args: any[]) {

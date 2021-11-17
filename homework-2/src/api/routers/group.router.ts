@@ -1,16 +1,18 @@
 import { validateGroupSchema } from '../../validation/group.validation';
 import { NextFunction, Request, Response, Router } from 'express';
-import GroupController from '../controllers/group.controller';
 import { asyncHandler } from '../utils/async.handler';
 import { GroupDTO } from '../../models/Group';
-import { Logger } from 'winston';
 import serviceMethodDescription from '../middlewares/service.method.description';
+import verifyToken from '../middlewares/verify.token';
+import { ContainerDependencies } from '../../loaders/dependency.injector.loader';
 
-export default (groupController: GroupController, logger: Logger): Router => {
+export default (containerDependencies: ContainerDependencies): Router => {
+    const { groupController, logger, jwt, authConfig } = containerDependencies;
     const router = Router({ caseSensitive: true, strict: true });
 
     router.post('/',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         validateGroupSchema(),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
@@ -24,6 +26,7 @@ export default (groupController: GroupController, logger: Logger): Router => {
 
     router.get('/:id',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const group = await groupController.getById(req.params.id);
@@ -35,6 +38,7 @@ export default (groupController: GroupController, logger: Logger): Router => {
 
     router.get('/',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const users = await groupController.findAll();
@@ -46,6 +50,7 @@ export default (groupController: GroupController, logger: Logger): Router => {
 
     router.put('/:id',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         validateGroupSchema(),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
@@ -61,6 +66,7 @@ export default (groupController: GroupController, logger: Logger): Router => {
 
     router.delete('/:id',
         serviceMethodDescription(logger),
+        verifyToken(jwt, authConfig),
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const deleted = await groupController.deleteGroup(req.params.id);

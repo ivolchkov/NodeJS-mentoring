@@ -101,3 +101,16 @@ Every method in the controllers should log the errors which should include the f
  - error message.
 #### Additional task 5*
 Add middleware wrapper functions (or decorators) which will track the methods’ execution time.
+## HOMEWORK 6
+### JWT AUTHORIZATION AND CORS
+#### TASK 6.1
+Add authorization to the already existing REST service.
+1) Add `login(username, password)` method which should return **JWT** token.
+2) Add a middleware which will proxy all the requests (except **login**) and check that **HTTP** **Authorization** header has the
+correct value of **JWT** token.
+3) **HTTP Authorization** header is absent in the request, the middleware should stop further controller method execution and
+return **HTTP** **401** code (**Unauthorized Error**) and standard error message.
+4) In case of **HTTP Authorization** header has invalid **JWT** token in the request, the middleware should return **HTTP** code **403** 
+(**Forbidden Error**) and standard error message.
+#### TASK 6.2
+Add CORS middleware to access service methods from WEB applications hosted on another domains ([https://github.com/expressjs/cors](https://github.com/expressjs/cors)).

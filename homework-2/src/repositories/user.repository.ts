@@ -37,6 +37,14 @@ export default class UserRepository {
         });
     }
 
+    public getByLogin(login: string): Promise<UserModel> {
+        return User.findOne({
+            where: {
+                login
+            }
+        });
+    }
+
     public async update(id: string, userDto: UserDTO): Promise<UserModel> {
         const user = await User.findByPk(id);
 
