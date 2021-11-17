@@ -1,20 +1,24 @@
 import { Container } from 'typedi';
 import { logger } from './logger.loader';
-import { Model, Op } from 'sequelize';
-import { UserAttributes, UserDTO } from '../models/User';
+import { Op } from 'sequelize';
 import UserController from '../api/controllers/user.controller';
+import { DatabaseModel } from './db.models.loader';
+import GroupController from '../api/controllers/group.controller';
+import { sequelizeConnection } from './db.connection.loader';
 
-export default ({ models }: { models: { name: string; model: Model<UserAttributes, UserDTO> }[] }): ContainerDependencies  => {
+export default (models: Array<DatabaseModel>): ContainerDependencies => {
     try {
         models.forEach(m => {
             Container.set(m.name, m.model);
         });
         Container.set('logger', logger);
         Container.set('op', Op);
+        Container.set('sequelize', sequelizeConnection);
         logger.info('All dependencies were injected into the container');
 
         return {
-            userController: Container.get(UserController)
+            userController: Container.get(UserController),
+            groupController: Container.get(GroupController)
         };
     } catch (e) {
         logger.error(`Error was occurred on dependency injector loader: ${e}`);
@@ -23,5 +27,6 @@ export default ({ models }: { models: { name: string; model: Model<UserAttribute
 };
 
 export interface ContainerDependencies {
-    userController:UserController
+    userController: UserController;
+    groupController: GroupController;
 }

@@ -1,6 +1,7 @@
 import { Inject, Service } from 'typedi';
 import User, { UserDTO, UserModel } from '../models/User';
-import { Op } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
+import UserGroup, { UserGroupModel } from '../models/UserGroup';
 
 @Service({ id: 'user.repository' })
 export default class UserRepository {
@@ -8,8 +9,12 @@ export default class UserRepository {
         this.op = op;
     }
 
-    public create(user: UserDTO): Promise<UserModel | Error> {
+    public create(user: UserDTO): Promise<UserModel> {
         return User.create(user);
+    }
+
+    public bulkCreateUserGroupRelation(userGroupList: { GroupUuid: string; UserUuid: string }[], transaction: Transaction) : Promise<Array<UserGroupModel>> {
+        return UserGroup.bulkCreate(userGroupList, { transaction: transaction });
     }
 
     public getById(id: string): Promise<UserModel> {

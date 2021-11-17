@@ -58,3 +58,31 @@ contain the following set of directories:
       |-data-access  
       |-models
 </pre>
+## HOMEWORK 4
+### SECOND ENTITY AND MANY-TO-MANY ENTITY RELATIONSHIPS
+#### TASK 4.1
+Add **Group** entity to already existing **REST** service with **CRUD** operations.  
+1) The **Group** entity should have the following properties(you can use **UUID** as Group **id**):
+<pre>
+type Permission = 'READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES';
+type Group = {
+   id: string,
+   name: string,
+   permissions: Array&lt;Permission&gt;
+}</pre>  
+2) The service should provide the following **CRUD** operations for **Group**:
+- get group by **id**;
+- get all groups;
+- create and update a group;
+- remove group (**hard delete** – group data is fully removed from the DB).
+3) Storing of groups data should be done in **PostgreSQL** in **Groups** table.
+4) The service should follow the principles of 3-layer architecture.
+#### TASK 4.2
+Link **User** records in one table with **Group** records in another table.
+1) Add a **UserGroup** table(“_many-to-many_” relationship) which will store the data 
+describing which users are assigned to which group.
+2) If any record gets removed from the DB, then all linked records should be removed from **UserGroup** as well.
+#### TASK 4.3
+Add `addUsersToGroup(groupId, userIds)` method which will allow adding users to a certain group. Use transactions 
+to save records in DB
+

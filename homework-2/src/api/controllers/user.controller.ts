@@ -1,6 +1,7 @@
 import { Inject, Service } from 'typedi';
 import UserService from '../../services/user.service';
 import { UserDTO, UserModel } from '../../models/User';
+import { UserGroupModel } from '../../models/UserGroup';
 
 @Service()
 export default class UserController {
@@ -10,6 +11,10 @@ export default class UserController {
 
     public createUser(user: UserDTO): Promise<UserModel | Error> {
         return this.userService.create(user);
+    }
+
+    public addUsersToGroup(groupId: string, userIds: Array<string>): Promise<Array<UserGroupModel>> {
+        return this.userService.addUsersToGroup(groupId, userIds);
     }
 
     public getById(id: string): Promise<UserModel> {

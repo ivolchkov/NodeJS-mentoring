@@ -42,7 +42,7 @@ export function validateLimit() {
     };
 }
 
-function errorHandling(error: ValidationError, res: Response, next: NextFunction) {
+export function errorHandling(error: ValidationError, res: Response, next: NextFunction) : void {
     if (error?.isJoi) {
         logger.info(error.message);
         void res.json(badRequest(error.message).output.payload);
