@@ -5,6 +5,7 @@ import UserController from '../api/controllers/user.controller';
 import { DatabaseModel } from './db.models.loader';
 import GroupController from '../api/controllers/group.controller';
 import { sequelizeConnection } from './db.connection.loader';
+import { Logger } from 'winston';
 
 export default (models: Array<DatabaseModel>): ContainerDependencies => {
     try {
@@ -18,7 +19,8 @@ export default (models: Array<DatabaseModel>): ContainerDependencies => {
 
         return {
             userController: Container.get(UserController),
-            groupController: Container.get(GroupController)
+            groupController: Container.get(GroupController),
+            logger: Container.get('logger')
         };
     } catch (e) {
         logger.error(`Error was occurred on dependency injector loader: ${e}`);
@@ -29,4 +31,5 @@ export default (models: Array<DatabaseModel>): ContainerDependencies => {
 export interface ContainerDependencies {
     userController: UserController;
     groupController: GroupController;
+    logger: Logger;
 }

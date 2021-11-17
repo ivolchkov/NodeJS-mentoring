@@ -27,6 +27,7 @@
     "express": "^4.17.1",
     "joi": "^17.4.2",
     "nodemon": "^2.0.12",
+    "perf_hooks": "^0.0.1",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.1.13",

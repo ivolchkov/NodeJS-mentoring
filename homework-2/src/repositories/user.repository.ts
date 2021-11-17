@@ -14,7 +14,7 @@ export default class UserRepository {
     }
 
     public bulkCreateUserGroupRelation(userGroupList: { GroupUuid: string; UserUuid: string }[], transaction: Transaction) : Promise<Array<UserGroupModel>> {
-        return UserGroup.bulkCreate(userGroupList, { transaction: transaction });
+        return UserGroup.bulkCreate(userGroupList, { transaction });
     }
 
     public getById(id: string): Promise<UserModel> {
